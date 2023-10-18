@@ -24,5 +24,26 @@ stages:
       steps:
       - script: mvn install
         displayName: 'Instalando la app con Maven2'        
-
-
+- stage:
+  displayName: 'Realizando Pruebas de QA'
+  jobs:
+    - job: 
+      steps:
+      - script: echo Pruebas de Calidad de Sofware!
+        displayName: 'Calidad de Software'
+- stage:
+  displayName: 'Realizando Pruebas de Seguridad'
+  jobs:
+    - job: 
+      steps:
+      - script: |
+          mvn install
+          fortifyupdate -locale es
+        displayName: 'Calidad de Software'
+- stage:
+  displayName: 'Publicando Artefacto'
+  jobs:
+    - job: 
+      steps:
+      - script: echo Pruebas de Calidad de Sofware!
+        displayName: 'Calidad de Software'
