@@ -36,14 +36,16 @@ stages:
   jobs:
     - job: 
       steps:
-      - script: |
-          mvn install
-          fortifyupdate -locale es
-        displayName: 'Calidad de Software'
+      - script: mvn install
+        displayName: 'Pre requisitos de analisis SAST'
+      - script: fortifyupdate -locale es
+        displayName: 'Actualizando las reglas a la ultima version'
+      - script: echo Fortify!
+        displayName: 'Limpiando datos temporales'
 - stage:
   displayName: 'Publicando Artefacto'
   jobs:
     - job: 
       steps:
-      - script: echo Pruebas de Calidad de Sofware!
-        displayName: 'Calidad de Software'
+      - script: echo Publicando App!
+        displayName: 'Publicando App'
