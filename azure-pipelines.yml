@@ -15,7 +15,7 @@ stages:
   jobs:
     - job: 
       steps:
-      - script: Descargando la App!
+      - script: echo Descargando la App!
         displayName: 'Descargando la App'
 - stage:
   displayName: 'Compilando la aplicacion'
