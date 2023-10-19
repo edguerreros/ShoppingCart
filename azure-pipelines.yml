@@ -37,13 +37,18 @@ stages:
     - job: 
       displayName: Generando Sesion en Fortify on Demand
       steps:
-      - script: fcli fod -h
+      - script: fcli fod session login demoSession --tenant=FranklinBank --user="Edwin Guerrero" --password=UTB6azg1Z1E9MXRsY0VyRCZyN2RjLmZVUkNBZllL0 --url=https://api.ams.fortify.com/
         displayName: 'Autenticando a Fod'
     - job: 
       displayName: Verificando que existe la version del App
       steps:
       - script: fcli fod -h
         displayName: 'Verificando existencia en FoD'
+    - job: 
+      displayName: Desconectando de FoD
+      steps:
+      - script: fcli fod session logout
+        displayName: 'Desconectando de FoD'
 - stage:
   displayName: 'Publicando Artefacto'
   jobs:
