@@ -22,7 +22,7 @@ stages:
   jobs:
     - job: 
       steps:
-      - script: mvn install
+      - script: mvn install -DskipTests
         displayName: 'Instalando la app con Maven2'        
 - stage:
   displayName: 'Realizando Pruebas de QA'
@@ -36,18 +36,16 @@ stages:
   jobs:
     - job: 
       steps:
-      - script: mvn install
+      - script: mvn install -DskipTests
         displayName: 'Pre requisitos de analisis SAST'
       - script: fortifyupdate -locale es
         displayName: 'Actualizando las reglas a la ultima version'
       - script: sourceanalyzer -b package -clean -v
         displayName: 'Limpiando temporales'
-      - script: sourceanalyzer -b package mvn
+      - script: sourceanalyzer -b package mvn -DskipTests
         displayName: 'Traduccion al modelo Fortify'
       - script: sourceanalyzer -b package -scan -f package.fpr
         displayName: 'Generacion del Archivo FPR'
-      - script: fortifyclient -url http://10.0.1.1:8080/ssc -authtoken 66efaf80-e1a4-4bd5-8ca6-003e936ae2ed uploadFPR -file package.fpr -applicationVersionID 10010
-        displayName: 'Cargando archivo a Fortify SSC'
 - stage:
   displayName: 'Publicando Artefacto'
   jobs:
