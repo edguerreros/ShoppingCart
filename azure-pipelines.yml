@@ -35,17 +35,15 @@ stages:
   displayName: 'Realizando Pruebas de Seguridad'
   jobs:
     - job: 
+      displayName: Generando Sesion en Fortify on Demand
       steps:
-      - script: mvn install -DskipTests
-        displayName: 'Pre requisitos de analisis SAST'
-      - script: fortifyupdate -locale es
-        displayName: 'Actualizando las reglas a la ultima version'
-      - script: sourceanalyzer -b package -clean -v
-        displayName: 'Limpiando temporales'
-      - script: sourceanalyzer -b package mvn -DskipTests
-        displayName: 'Traduccion al modelo Fortify'
-      - script: sourceanalyzer -b package -scan -f package.fpr
-        displayName: 'Generacion del Archivo FPR'
+      - script: fcli fod -h
+        displayName: 'Autenticando a Fod'
+    - job: 
+      displayName: Verificando que existe la version del App
+      steps:
+      - script: fcli fod -h
+        displayName: 'Verificando existencia en FoD'
 - stage:
   displayName: 'Publicando Artefacto'
   jobs:
