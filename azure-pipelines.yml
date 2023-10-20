@@ -35,20 +35,17 @@ stages:
   displayName: 'Realizando Pruebas de Seguridad'
   jobs:
     - job: 
-      displayName: Generando Sesion en Fortify on Demand
+      displayName: Generando Analisis en Fortify on Demand
       steps:
       - script: fcli fod session login $(Build.Repository.Name) --tenant=FranklinBank --user="Edwin Guerrero" --password=UTB6azg1Z1E9MXRsY0VyRCZyN2RjLmZVUkNBZllL0 --url=https://api.ams.fortify.com/
         displayName: 'Autenticando a Fod'
-    - job: 
-      displayName: Verificando que existe la version del App
-      steps:
-      - script: fcli fod -h
-        displayName: 'Verificando existencia en FoD'
-    - job: 
-      displayName: Desconectando de FoD
-      steps:
+      - script: scancentral package -bt mvn -bf pom.xml -o shoppingCart.zip
+        displayName: 'Empaquetando el codigo fuente'
+      - script: fcli fod sast start --purchase-entitlement --entitlement-id= --entitlement-preference=SubscriptionOnly --remediation-preference=RemediationScanIfAvailable --in-progress-action=Queue --file=shoppingCart.zip 158409
+        displayName: 'Enviando el escaneo a FoD'
       - script: fcli fod session logout $(Build.Repository.Name)
         displayName: 'Desconectando de FoD'
+      
 - stage:
   displayName: 'Publicando Artefacto'
   jobs:
