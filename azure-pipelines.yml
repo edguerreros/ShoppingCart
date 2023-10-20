@@ -41,7 +41,7 @@ stages:
         displayName: 'Autenticando a Fod'
       - script: scancentral package -bt mvn -bf pom.xml -oss -o shoppingCart.zip
         displayName: 'Empaquetando el codigo fuente'
-      - script: fcli fod sast start --purchase-entitlement --entitlement-id=11948 --entitlement-preference=SubscriptionOnly --remediation-preference=RemediationScanIfAvailable --in-progress-action=Queue --file=shoppingCart.zip 958725 --session=$(Build.Repository.Name)
+      - script: fcli fod sast start --purchase-entitlement --entitlement-id=11948 --entitlement-preference=SubscriptionOnly --remediation-preference=NonRemediationScanOnly --in-progress-action=Queue --file=shoppingCart.zip 958725 --session=$(Build.Repository.Name)
         displayName: 'Enviando el escaneo a FoD'
       - script: fcli fod session logout $(Build.Repository.Name)
         displayName: 'Desconectando de FoD'
